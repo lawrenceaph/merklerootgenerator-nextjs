@@ -37,13 +37,14 @@ const onSubmit = (data) => {
 console.log(theRootHash)
 return(
 <>
-
-<div className="h-12 bg-sky-800 flex flex-col items-center justify-center text-white font-bold text-2xl">
+<div className="flex flex-col items-center">
+<div className="h-12 bg-sky-800 w-full flex flex-col items-center justify-center text-white font-bold text-2xl">
     Generate a Merkle Root Hash
 </div>
-<div className="text-sky-700 text-center">
-    This tiny web app produces a Merkle Root Hash compatible with the <Link href='https://github.com/hashlips-lab'><a className="font-semibold text-pink-700 cursor-pointer">HashLips ecosystem </a></Link> for building and deploying NFT smart contracts. 
-   <br/> After generating the root hash here, you can use it to update the Merkle root of your smart contract directly, saving you time. Enjoy!
+<div className="md:w-1/2">
+<div className="text-sky-700 text-center p-2">
+    Generate a Merkle Root Hash compatible with the <Link href='https://github.com/hashlips-lab'><a className="font-semibold text-sky-900 cursor-pointer">HashLips ecosystem </a></Link> for building NFT smart contracts. 
+
 </div>
 {theRootHash && 
 <div className=" my-4 space-y-2 flex flex-wrap text-wrap flex-col justify-center items-center text-center">
@@ -62,7 +63,7 @@ return(
       
       {/* include validation with required or other standard HTML validation rules */}
       <textarea className="w-full m-2 border-2 p-2 text-sky-600 border-sky-700 text-lg rounded-lg" rows={10}
-       defaultValue={'Replace this text with the wallet addresses--or other hash strings--separated by a comma.'}
+       defaultValue={'Replace this text with the wallet addresses separated by a comma. Spaces and quotes are removed automatically upon submission. '}
         {...register("addresses", { required: true })} />
       {/* errors will return when field validation fails  */}
       {errors.exampleRequired && <span>This field is required</span>}
@@ -71,7 +72,14 @@ return(
     </form>
    
 
+<div className=' text-center text-sky-700 mt-5 break-all'>
+Found a bug? <br/> Let me know via the github repo: <Link  href="https://github.com/lawrenceaph/merklerootgenerator-nextjs"><a className="font-bold">Here 💖</a></Link>
+
+</div>
+</div>
+</div>
 </>
+
 
 );
 }
