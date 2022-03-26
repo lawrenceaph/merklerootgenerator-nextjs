@@ -110,8 +110,9 @@ return(
 <title>  Merkle Root and Proof Tool </title>
 </Head>
 <div className="flex flex-col items-center">
+  
 <div className="h-12 bg-sky-800 w-full flex flex-col items-center justify-center text-white font-bold text-md md:text-2xl">
-    🌲 Merkle Root and Proof Tool 🧾
+<Link href="/"><a>🌲 Merkle Root and Proof Tool 🔎</a></Link>
 </div>
 <div className="md:w-1/2">
 <div className="text-sky-700 text-center p-2">
@@ -226,7 +227,7 @@ Your Merkle Proof:
   verity && verity===true &&
   
   <>
-  <div className="text-center text-sky-700">
+  <div className="text-center text-sky-700 text-2xl animate-pulse">
     Result:
     The Address is in the Merkle Tree!🎉
   </div>
@@ -243,7 +244,7 @@ Your Merkle Proof:
 
 
   {verity===false &&
-<div className="text-center text-sky-700">
+<div className="text-center text-sky-700 text-2xl animate-pulse">
 
   Result: The Address is not in the Merkle Tree. 
   </div>
