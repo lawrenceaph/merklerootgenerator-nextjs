@@ -78,6 +78,9 @@ const generateMerkleTree = (data) => {
 // The function below is triggered by form submission. It takes in data and passes it to the function above (generateProof) which in turn generates the Merkle Proof.
 const generateProofforAddress = (data) => {generateProof(data);toast.success('Proof Generated!')}
 
+// The functions below are used to check if an address is in a Merkle Tree. It takes in the address, the root Hash and the Proof.
+// The verifyAddress function is triggered upon form submission (by the HandleSubmit function of the useForm hook)
+// The checkAddress function is called by the verifyAddress function, which passes all the needed data. It returns true or false and sets the state variable to reflect the result. 
 
 const verifyAddress = (data) => {checkAddress(data)}
 
@@ -177,7 +180,7 @@ return(
 Your Merkle Proof:
 </div>
 <div className="text-sky-700 break-all p-2">
-[&ldquo;{theProof.join('","')}&ldquo;]
+[&lsquo;{theProof.join("','")}&lsquo;]
 </div>
   </div>
   }
