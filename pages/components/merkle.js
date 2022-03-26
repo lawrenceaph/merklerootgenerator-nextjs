@@ -27,6 +27,9 @@ const [theMerkleTree, setTheMerkleTree] =useState();
 // sampleProof stores the generated Merkle Proof
 const [theProof, setTheProof]=useState();
 
+const [verity, setVerity]=useState();
+const [rawProof, setRawProof] = useState();
+
 
 // The function below takes data, separated by commas, and generates a Merkle Tree using the data as leaf nodes
 // Once the Merkled Tree is generated, it computes the root hash and stores it in the state variable "theRootHash" 
@@ -56,9 +59,10 @@ const generateMerkleHash = async(data)=> {
 
 const generateProof = async(data) => {
   const {address}= data
-  const merkleProof =await theMerkleTree.getHexProof((keccak256(address)))
-  
+  const merkleProof =await theMerkleTree.getHexProof((keccak256(address)));
+  const rawMerkleProof = merkleProof.toString().replaceAll('\'', '').replaceAll(' ', '');
   setTheProof(merkleProof);
+  setRawProof(rawMerkleProof);
 
    
 }
@@ -75,6 +79,28 @@ const generateMerkleTree = (data) => {
 const generateProofforAddress = (data) => {generateProof(data);toast.success('Proof Generated!')}
 
 
+const verifyAddress = (data) => {checkAddress(data)}
+
+const checkAddress = async(data)=> {
+const {address2} = data
+const addresso = keccak256(address2)
+const {rootHash} = data
+const {Proof} = data
+
+ Proof = Proof.toString().replaceAll('\'', '').replaceAll(' ', '').replaceAll('\"', '');
+ Proof = Proof.split(',')
+
+ 
+const v= await  theMerkleTree.verify(Proof, addresso, rootHash)
+setVerity(v);
+
+
+}
+console.log("Proof:",theProof)
+console.log(theRootHash)
+console.log(theMerkleTree)
+console.log(verity)
+console.log(rawProof)
 return(
 <>
 <Head>
@@ -89,6 +115,7 @@ return(
     Generate a Merkle Root Hash for NFT smart contracts and other use cases.🥂 
 
 </div>
+
 {theRootHash && 
 <div className=" my-4 space-y-2 flex flex-wrap text-wrap flex-col justify-center items-center text-center">
   <p className="rounded-lg border border-2 border-sky-700 p-2 text-sky-700 font-semibold">Your Merkle Root Hash:</p> 
@@ -149,18 +176,79 @@ return(
 <div className="font-semibold text-center">
 Your Merkle Proof:
 </div>
-
+<div className="text-sky-700 break-all p-2">
 [&ldquo;{theProof.join('","')}&ldquo;]
-
+</div>
   </div>
   }
 </div>
+
+
+<div>
+  <div className="text-center text-sky-700">
+  Verify if an Address is in a Merkle Tree Here:
+  </div>
+<form className="flex flex-col items-center justify-center m-2" onSubmit={handleSubmit(verifyAddress)}>
+      
+      <input className="w-full m-2 border-2 p-2 text-sky-600 border-sky-700 text-lg rounded-lg" 
+       defaultValue={'Address'}
+        {...register("address2", { required: true })} />
+      {errors.addresses && <span>This field is required</span>}
+
+      <input className="w-full m-2 border-2 p-2 text-sky-600 border-sky-700 text-lg rounded-lg" 
+       defaultValue={  'Root Hash goes here'}
+        {...register("rootHash", { required: true })} />
+      {errors.rootHash && <span>This field is required</span>}
+    
+      <input className="w-full m-2 border-2 p-2 text-sky-600 border-sky-700 text-lg rounded-lg" 
+       defaultValue={"Proof goes here (use single quotes: 'value1', 'value2')"}
+        {...register("Proof", { required: true })} />
+      {errors.Proof && <span>This field is required</span>}
+
+      <input className="border rounded-lg border-2 border-sky-700 bg-sky-600 p-2 text-white" type="submit" />
+    </form>
+
+</div>
+
+{verity && 
+<div>
+
+<> 
+
+{
+  verity && verity===true &&
+  
+  <>
+  <div className="text-center text-sky-700">
+    Result:
+    The Address is in the Merkle Tree!🎉
+  </div>
+
+
+
+</>
+}
+
+</>  
+  
+  </div>}
+
+
+
+  {verity===false &&
+<div className="text-center text-sky-700">
+
+  Result: The Address is not in the Merkle Tree. 
+  </div>
+  
+  }
 
 <div className=' text-center text-sky-700 mt-5 break-all'>
 
 Found a bug? <br/> Let me know via the github repo: <Link  href="https://github.com/lawrenceaph/merklerootgenerator-nextjs"><a className="font-bold">Here 💖</a></Link>
 
 </div>
+
 
 <div className="text-center text-sky-700">
   Building NFT smart contracts? Check out: 
@@ -171,7 +259,7 @@ Found a bug? <br/> Let me know via the github repo: <Link  href="https://github.
 <div>
   <Link href='https://github.com/hashlips-lab'><a className="underline text-center font-semibold text-sky-700 cursor-pointer">HashLips Lab </a></Link></div>
   </div>
-</div>
+ </div>
 </div>
 </>
 
