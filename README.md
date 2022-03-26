@@ -11,6 +11,6 @@ Once the address is submitted, the Merkle Proof is displayed as an array that yo
 ![image](https://user-images.githubusercontent.com/76676277/160230193-42fa6805-3a75-4442-81b0-8a81cafbc3da.png)
 
 
-This tool was inspired by the work of [Hash Lips Lab](https://github.com/hashlips-lab)
+This tool was inspired by the work of [Hash Lips](https://github.com/HashLips) and  [Hash Lips Lab](https://github.com/hashlips-lab)
 
 You can access the app at https://merkle.unstoppable.gallery.
