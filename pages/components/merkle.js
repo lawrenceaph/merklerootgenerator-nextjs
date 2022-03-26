@@ -176,14 +176,18 @@ return(
   {theProof && 
 
 <div className="break-all">
-<div className="font-semibold text-center">
+<div className="font-semibold text-center text-sky-700">
 Your Merkle Proof:
 </div>
 <div className="text-sky-700 break-all p-2">
-[&lsquo;{theProof.join("','")}&lsquo;]
+[&ldquo;{theProof.join('","')}&ldquo;]
 </div>
+<div className="text-center text-sky-700"> 
+<div className="font-semibold">Your Raw Merkle Proof:</div>
+<div>{rawProof}</div>
   </div>
-  }
+
+</div>  }
 </div>
 
 
@@ -204,7 +208,7 @@ Your Merkle Proof:
       {errors.rootHash && <span>This field is required</span>}
     
       <input className="w-full m-2 border-2 p-2 text-sky-600 border-sky-700 text-lg rounded-lg" 
-       defaultValue={"Proof goes here (use single quotes: 'value1', 'value2')"}
+       defaultValue={"Proof goes here (use raw proof)"}
         {...register("Proof", { required: true })} />
       {errors.Proof && <span>This field is required</span>}
 
