@@ -130,7 +130,7 @@ return(
 Your Proof:
 </div>
 
-["{sampleProof.join('","')}"]
+[&ldquo;{sampleProof.join('","')}&ldquo;]
 
   </div>
   }
