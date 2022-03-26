@@ -6,7 +6,7 @@ import { MerkleTree } from "merkletreejs";
 import keccak256 from "keccak256";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import HexProof from "./hexProof"; 
+import Head from "next/head";
 
 export default function Merkle(){
 
@@ -50,23 +50,26 @@ const { register, handleSubmit, watch, formState: { errors } } = useForm();
  
 console.log(watch("example")); // watch input value by passing the name of it
 const onSubmit = (data) => {
- generateMerkleHash(data); 
+ generateMerkleHash(data);toast.success("Root Hash Generated!")
 }
 
-const goSubmit = (data) => {generateProof(data);}
+const goSubmit = (data) => {generateProof(data);toast.success('Proof Generated!')}
 
 console.log("The Merkle:",theMerkleOne);
 console.log(theRootHash)
 console.log(sampleProof)
 return(
 <>
+<Head>
+<title>  Merkle Root and Proof Tool </title>
+</Head>
 <div className="flex flex-col items-center">
-<div className="h-12 bg-sky-800 w-full flex flex-col items-center justify-center text-white font-bold text-2xl">
-    Generate a Merkle Root Hash
+<div className="h-12 bg-sky-800 w-full flex flex-col items-center justify-center text-white font-bold text-md md:text-2xl">
+    🌲 Merkle Root and Proof Tool 🧾
 </div>
 <div className="md:w-1/2">
 <div className="text-sky-700 text-center p-2">
-    Generate a Merkle Root Hash compatible with the <Link href='https://github.com/hashlips-lab'><a className="font-semibold text-sky-900 cursor-pointer">HashLips ecosystem </a></Link> for building NFT smart contracts. 
+    Generate a Merkle Root Hash for NFT smart contracts and other use cases.🥂 
 
 </div>
 {theRootHash && 
@@ -82,14 +85,11 @@ return(
 </div>
 }
     <form className="flex flex-col items-center justify-center m-2" onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
       
-      {/* include validation with required or other standard HTML validation rules */}
       <textarea className="w-full m-2 border-2 p-2 text-sky-600 border-sky-700 text-lg rounded-lg" rows={10}
-       defaultValue={'Replace this text with the wallet addresses separated by a comma. Spaces and quotes are removed automatically upon submission. '}
+       defaultValue={'Replace this text with the wallet addresses (or other values for your use case)  separated by a comma. Spaces and quotes are removed automatically upon submission. '}
         {...register("addresses", { required: true })} />
-      {/* errors will return when field validation fails  */}
-      {errors.exampleRequired && <span>This field is required</span>}
+      {errors.addresses && <span>This field is required</span>}
       
       <input className="border rounded-lg border-2 border-sky-700 bg-sky-600 p-2 text-white" type="submit" />
     </form>
@@ -100,8 +100,8 @@ return(
 <div className="">
   {theRootHash && theMerkleOne &&
 <>
-<div>
-  Get proof for an address here:
+<div className="text-sky-700">
+  Get the Merkle proof for an address here:
   </div>
 
 <form className="flex flex-col items-center justify-center m-2" onSubmit={handleSubmit(goSubmit)}>
@@ -127,7 +127,7 @@ return(
 
 <div className="break-all">
 <div className="font-semibold text-center">
-Your Proof:
+Your Merkle Proof:
 </div>
 
 [&ldquo;{sampleProof.join('","')}&ldquo;]
@@ -137,9 +137,14 @@ Your Proof:
 </div>
 
 <div className=' text-center text-sky-700 mt-5 break-all'>
+
 Found a bug? <br/> Let me know via the github repo: <Link  href="https://github.com/lawrenceaph/merklerootgenerator-nextjs"><a className="font-bold">Here 💖</a></Link>
 
 </div>
+<div className="text-center text-sky-700">
+  Building NFT smart contracts? Check out: <br/>
+  <Link href='https://github.com/hashlips-lab'><a className=" text-center font-semibold text-sky-900 cursor-pointer">HashLips Lab </a></Link></div>
+
 </div>
 </div>
 </>
